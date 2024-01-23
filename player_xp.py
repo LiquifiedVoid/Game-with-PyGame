@@ -5,7 +5,7 @@ class Player_xp():
         """Initialisiert die Klasse Player_xp.
         """
         self.level = 0
-        self.current_xp = 0
+        self.current_xp = 9
         self.xp_for_next_level = 10
         self.length = 600
         self.height = 15

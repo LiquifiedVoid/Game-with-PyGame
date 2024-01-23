@@ -51,6 +51,9 @@ class Main:
                         pygame.quit()
                         sys.exit()
                 self.level.run_level_up_interface(dt)
+                if self.level.level_up_interface.upgrade_ausgewaehlt:
+                    self.state = "game"
+                pygame.display.update()
 
 
 if __name__ == '__main__':
