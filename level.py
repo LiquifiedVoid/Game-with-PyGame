@@ -116,6 +116,13 @@ class Level:
                 return True
     
     def run_level_up_interface(self,dt):
+        self.env.update()
+        self.player_sprite.draw(self.display_surface)
+        self.enemy_sprites.draw(self.display_surface)
+        self.projectile_group.draw(self.display_surface)
+        self.player.xp.draw_xp_bar(self.display_surface)
+        self.player.draw_healthbar(self.display_surface)
+        self.player.wand.draw_cooldown(self.display_surface)
         self.level_up_interface.draw(dt)
         self.level_up_interface.update(dt)
         
