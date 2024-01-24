@@ -46,6 +46,7 @@ class Main:
                 pygame.display.update()
 
             if self.state == "level_up":
+                self.level.level_up_interface.upgrade_ausgewaehlt = False
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         pygame.quit()

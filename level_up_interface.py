@@ -54,7 +54,11 @@ class Interface_levelup():
         """ Updated die Level Up Oberfläche, indem es schaut welches Upgrade der Spieler wählt.
         """
         mouse_pos = pygame.mouse.get_pos()
-        for event in pygame.event.get():
+        print(mouse_pos)
+        print(self.box_1.collidepoint(mouse_pos[0],mouse_pos[1]))
+        event_list = pygame.event.get()
+        #click events
+        for event in event_list:
             #box 1
             if self.box_1.collidepoint(mouse_pos[0],mouse_pos[1])and event.type == pygame.MOUSEBUTTONUP:
                 self.upgrade_ausgewaehlt = True
@@ -64,4 +68,17 @@ class Interface_levelup():
             #box 3
             if self.box_3.collidepoint(mouse_pos[0],mouse_pos[1])and event.type == pygame.MOUSEBUTTONUP:
                 self.upgrade_ausgewaehlt = True
-    
+
+        #hover events
+        for event in event_list:
+            #box 1
+            if self.box_1.collidepoint(mouse_pos[0],mouse_pos[1]):
+                pygame.draw.rect(self.screen, "grey", self.box_1, border_radius=25)
+            #box 2
+            if self.box_2.collidepoint(mouse_pos[0],mouse_pos[1]):
+                pygame.draw.rect(self.screen, "grey", self.box_2, border_radius=25)
+                print("hallo")
+            #box 3
+            if self.box_3.collidepoint(mouse_pos[0],mouse_pos[1]):
+                pygame.draw.rect(self.screen, "grey", self.box_3, border_radius=25)
+            
