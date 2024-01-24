@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from hilfe import *
-from timer import Timer
+
 from wand import Wand
 from player_xp import Player_xp
 

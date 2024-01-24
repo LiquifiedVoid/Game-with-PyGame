@@ -34,7 +34,7 @@ class Main:
                 run_game = self.level.run_startscreen(dt)
                 if run_game:
                     self.state = "game"
-                pygame.display.update()
+                
 
             if self.state == "game":
                 for event in self.eh.get_events():
@@ -50,7 +50,8 @@ class Main:
 
                 dt = self.clock.tick(60) / 1000
                 self.level.run_game(dt)
-                pygame.display.update()
+                
+                
 
             if self.state == "level_up":
                 self.level.level_up_interface.upgrade_ausgewaehlt = False
@@ -58,10 +59,12 @@ class Main:
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         sys.exit()
+                dt = self.clock.tick(60) / 1000
                 self.level.run_level_up_interface(dt)
                 if self.level.level_up_interface.upgrade_ausgewaehlt:
                     self.state = "game"
-                pygame.display.update()
+                
+            pygame.display.update()
 
 
 if __name__ == '__main__':

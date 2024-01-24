@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from hilfe import *
-from timer import Timer
+
 import random
 
 class Enemy(pygame.sprite.Sprite):
@@ -109,5 +109,6 @@ class Enemy(pygame.sprite.Sprite):
         self.move_to_player(dt)
         self.check_collision()
         self.animate(dt)
+        
         
         

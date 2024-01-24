@@ -63,17 +63,20 @@ class Interface_levelup():
         mouse_pos = pygame.mouse.get_pos()
         
         event_list = self.eh.get_events()
-        print(mouse_pos)
+        
         #click events
         for event in event_list:
             #box 1
             if self.box_1.collidepoint(mouse_pos[0],mouse_pos[1])and event.type == pygame.MOUSEBUTTONUP:
+                self.choose_upgrade("box_1")
                 self.upgrade_ausgewaehlt = True
             #box 2
             if self.box_2.collidepoint(mouse_pos[0],mouse_pos[1])and event.type == pygame.MOUSEBUTTONUP:
+                self.choose_upgrade("box_2")
                 self.upgrade_ausgewaehlt = True            
             #box 3
             if self.box_3.collidepoint(mouse_pos[0],mouse_pos[1])and event.type == pygame.MOUSEBUTTONUP:
+                self.choose_upgrade("box_3")
                 self.upgrade_ausgewaehlt = True
 
             #hover events
@@ -95,3 +98,6 @@ class Interface_levelup():
                 self.color_3 = "grey"
             else:
                 self.color_3 = "white"
+        
+    def choose_upgrade(self,box):
+        pass
