@@ -8,13 +8,17 @@ import sys
 import math
 from level_up_interface import Interface_levelup
 
+
 class Level:
-    def __init__(self):
+    def __init__(self, e_h):
         """Initialisiert die Level Klasse. 
         """
         ##Game
         #Display
         self.display_surface = pygame.display.get_surface()
+
+        #event handler
+        self.eh = e_h
 
         #Spawnpunkte für Gegner und Timer
         self.timer = 0
@@ -27,6 +31,7 @@ class Level:
         self.setup()
 
         pygame.font.init()
+        
         
     def get_font(self,size):
         """Gibt eine Schriftart zurück mit gegebener 
@@ -48,7 +53,7 @@ class Level:
         """
         self.env = Enviroment(self.display_surface)
         self.player = Player((self.display_surface.get_width()/2,self.display_surface.get_height()/2), self.player_sprite, self.projectile_group)
-        self.level_up_interface = Interface_levelup(self.display_surface)
+        self.level_up_interface = Interface_levelup(self.display_surface,self.eh)
         
     def run_game(self,dt):
         """Updated die Umgebung, den Spieler, die Gegner und die Projektile.
@@ -106,7 +111,7 @@ class Level:
 
         
         #check clicked
-        for event in pygame.event.get():
+        for event in self.eh.get_events():
             #quit
             if quit_rect.collidepoint(mouse_pos[0],mouse_pos[1])and event.type == pygame.MOUSEBUTTONUP:
                 pygame.quit()

@@ -119,7 +119,7 @@ class Player(pygame.sprite.Sprite):
         self.pos.y += self.direction.y * self.speed *dt
         self.rect.centery = self.pos.y
 
-    def check_gameover(self): #!!!!!!!TODO: gameover screen
+    def check_gameover(self): #!!!!TODO: gameover screen
         if self.status == "gameover":
             pass
 

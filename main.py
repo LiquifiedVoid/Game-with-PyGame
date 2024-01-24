@@ -2,24 +2,31 @@ import pygame
 import sys
 from settings import *
 from level import Level
-
+import event_handler as e_h
 
 class Main:
     def __init__(self):
         pygame.init()
+        #events für alle Klassen verfügbar machen
+        self.eh = e_h.EventHandler()
+        #Display
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("Game!")
+        #Clock
         self.clock = pygame.time.Clock()
-        self.level = Level()
+        #Level und Game
+        self.level = Level(self.eh)
         self.running = True
         self.state = "startscreen"
-
+        
+        
+        
     def run(self):
         """Main loop des Spiels. Updated den Start/Pause-Screen oder das Spiel und wechselt zwischen ihnen. 
         """
         while self.running:
             if self.state == "startscreen":
-                for event in pygame.event.get():
+                for event in self.eh.get_events():
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         sys.exit()
@@ -30,7 +37,7 @@ class Main:
                 pygame.display.update()
 
             if self.state == "game":
-                for event in pygame.event.get():
+                for event in self.eh.get_events():
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         sys.exit()
@@ -47,7 +54,7 @@ class Main:
 
             if self.state == "level_up":
                 self.level.level_up_interface.upgrade_ausgewaehlt = False
-                for event in pygame.event.get():
+                for event in self.eh.get_events():
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         sys.exit()

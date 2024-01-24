@@ -2,7 +2,7 @@ import pygame
 import random
 
 class Interface_levelup():
-    def __init__(self,screen):
+    def __init__(self,screen,e_h):
         """Initialisiert die Klasse Interface_levelup. 
         """
         self.screen = screen
@@ -22,6 +22,9 @@ class Interface_levelup():
         self.center_x = self.screen.get_width()/2
         self.center_y = self.screen.get_height()/2
         
+        #events
+        self.eh = e_h
+        
         #auswahlboxen
         self.box_width = 240
         self.box_height = 360
@@ -31,8 +34,12 @@ class Interface_levelup():
         self.box_2.center = (self.center_x-320,self.center_y)
         self.box_3 = pygame.Rect(self.center_x-300,self.center_y-100,self.box_width,self.box_height)
         self.box_3.center = (self.center_x+320,self.center_y)
-        print(self.box_1)
         self.upgrade_ausgewaehlt = False
+        
+        #farben initialisieren
+        self.color_1 = "white"
+        self.color_2 = "white"
+        self.color_3 = "white"
         
     def get_font(self,size):
         """Gibt eine Schriftart zurück mit gegebener 
@@ -45,18 +52,18 @@ class Interface_levelup():
         """
         self.screen.blit(self.text_level_up,self.level_up_rect)
         self.screen.blit(self.text_choose,self.choose_rect)
-        pygame.draw.rect(self.screen, "white", self.box_1, border_radius=25)
-        pygame.draw.rect(self.screen, "white", self.box_2, border_radius=25)
-        pygame.draw.rect(self.screen, "white", self.box_3, border_radius=25)
-        pygame.draw.line(self.screen, "black", (840, 360),(840, 360),width=10)
+        pygame.draw.rect(self.screen, self.color_1, self.box_1, border_radius=25)
+        pygame.draw.rect(self.screen, self.color_2, self.box_2, border_radius=25)
+        pygame.draw.rect(self.screen, self.color_3, self.box_3, border_radius=25)
+        
         
     def update(self, dt):
         """ Updated die Level Up Oberfläche, indem es schaut welches Upgrade der Spieler wählt.
         """
         mouse_pos = pygame.mouse.get_pos()
+        
+        event_list = self.eh.get_events()
         print(mouse_pos)
-        print(self.box_1.collidepoint(mouse_pos[0],mouse_pos[1]))
-        event_list = pygame.event.get()
         #click events
         for event in event_list:
             #box 1
@@ -69,16 +76,22 @@ class Interface_levelup():
             if self.box_3.collidepoint(mouse_pos[0],mouse_pos[1])and event.type == pygame.MOUSEBUTTONUP:
                 self.upgrade_ausgewaehlt = True
 
-        #hover events
-        for event in event_list:
+            #hover events
             #box 1
             if self.box_1.collidepoint(mouse_pos[0],mouse_pos[1]):
-                pygame.draw.rect(self.screen, "grey", self.box_1, border_radius=25)
+                #pygame.draw.rect(self.screen, "grey", self.box_1, border_radius=25)
+                self.color_1 = "grey"
+            else:
+                self.color_1 = "white"
             #box 2
             if self.box_2.collidepoint(mouse_pos[0],mouse_pos[1]):
-                pygame.draw.rect(self.screen, "grey", self.box_2, border_radius=25)
-                print("hallo")
+                #pygame.draw.rect(self.screen, "grey", self.box_2, border_radius=25)
+                self.color_2 = "grey"
+            else:
+                self.color_2 = "white"
             #box 3
             if self.box_3.collidepoint(mouse_pos[0],mouse_pos[1]):
-                pygame.draw.rect(self.screen, "grey", self.box_3, border_radius=25)
-            
+                #pygame.draw.rect(self.screen, "grey", self.box_3, border_radius=25)
+                self.color_3 = "grey"
+            else:
+                self.color_3 = "white"
