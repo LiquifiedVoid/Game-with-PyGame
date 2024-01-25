@@ -19,7 +19,14 @@ class Interface_levelup():
         #player
         self.player = player
         
-        self.upgrade_list = ["health","damage","speed","cooldown","projectile_speed"]
+        self.upgrade_list = ["health","speed","cooldown","projectile_speed"]
+        
+        self.size_upgrade = 100
+        self.health_image = pygame.transform.scale(pygame.image.load("images/level/level_up_screen/health.png"),(self.size_upgrade,self.size_upgrade))
+        self.speed_image = pygame.transform.scale(pygame.image.load("images/level/level_up_screen/speed.png") ,(self.size_upgrade,self.size_upgrade))
+        self.cooldown_image = pygame.transform.scale(pygame.image.load("images/level/level_up_screen/cooldown.png") ,(self.size_upgrade,self.size_upgrade))
+        self.projectile_speed_image = pygame.transform.scale(pygame.image.load("images/level/level_up_screen/projectile_speed.png") ,(self.size_upgrade,self.size_upgrade))
+        
         
         self.center_x = self.screen.get_width()/2
         self.center_y = self.screen.get_height()/2
@@ -66,6 +73,18 @@ class Interface_levelup():
         self.screen.blit(self.get_font(30).render(self.current_upgrades[0], True, "black"),(self.box_1.x+20,self.box_1.y+20))
         self.screen.blit(self.get_font(30).render(self.current_upgrades[1], True, "black"),(self.box_2.x+20,self.box_2.y+20))#
         self.screen.blit(self.get_font(30).render(self.current_upgrades[2], True, "black"),(self.box_3.x+20,self.box_3.y+20))
+        
+        for i in range(3):
+            box = getattr(self,"box_"+str(i+1))
+            print(box)
+            if self.current_upgrades[i] == "health":
+                self.screen.blit(self.health_image,(box.center[0]-self.size_upgrade/2,box.center[1]-self.size_upgrade/2))
+            if self.current_upgrades[i] == "speed":
+                self.screen.blit(self.speed_image,(box.center[0]-self.size_upgrade/2,box.center[1]-self.size_upgrade/2))
+            if self.current_upgrades[i] == "cooldown":
+                self.screen.blit(self.cooldown_image,(box.center[0]-self.size_upgrade/2,box.center[1]-self.size_upgrade/2))
+            if self.current_upgrades[i] == "projectile_speed":
+                self.screen.blit(self.projectile_speed_image,(box.center[0]-self.size_upgrade/2,box.center[1]-self.size_upgrade/2))
         
     def update(self, dt):
         """ Updated die Level Up Oberfläche, indem es schaut welches Upgrade der Spieler wählt.
