@@ -53,7 +53,7 @@ class Level:
         """
         self.env = Enviroment(self.display_surface)
         self.player = Player((self.display_surface.get_width()/2,self.display_surface.get_height()/2), self.player_sprite, self.projectile_group)
-        self.level_up_interface = Interface_levelup(self.display_surface,self.eh)
+        self.level_up_interface = Interface_levelup(self.display_surface,self.eh,self.player)
         
     def run_game(self,dt):
         """Updated die Umgebung, den Spieler, die Gegner und die Projektile.
