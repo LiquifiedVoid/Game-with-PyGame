@@ -11,6 +11,7 @@ class Wand(): #Wand = Zauberstab
         self.current_cooldown = 0
         self.type = 'fire'
         self.group = group
+        self.projectile_speed = 400
         
     def draw_cooldown(self,screen):
         """Zeichnet den Cooldown des Wands auf den Screen.
@@ -24,9 +25,9 @@ class Wand(): #Wand = Zauberstab
     def use(self,mouse_pos):
         """Fügt dem Spieler eine neue Projektile Instanz hinzu, aber nur wenn der Cooldown abgelaufen ist.
         """
-        if self.current_cooldown == 0:
+        if self.current_cooldown <= 0:
             self.mouse_pos = mouse_pos
             self.current_cooldown = self.base_cooldown
-            self.group.add(Projectile(self.player_pos, self.type, self.mouse_pos))
+            self.group.add(Projectile(self.player_pos, self.type, self.mouse_pos, self.projectile_speed))
 
         

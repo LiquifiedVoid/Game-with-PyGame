@@ -45,6 +45,11 @@ class Interface_levelup():
         self.box_3.center = (self.center_x+320,self.center_y)
         self.upgrade_ausgewaehlt = False
         
+        #hover
+        self.hover_1 = False
+        self.hover_2 = False
+        self.hover_3 = False
+        
         #farben initialisieren
         self.color_1 = "white"
         self.color_2 = "white"
@@ -52,6 +57,12 @@ class Interface_levelup():
         
         self.current_upgrades = []
         self.randomized = False
+        
+        #upgrade level
+        self.health_level = 0
+        self.speed_level = 0
+        self.cooldown_level = 0
+        self.projectile_speed_level = 0
         
     def get_font(self,size):
         """Gibt eine Schriftart zurück mit gegebener 
@@ -70,21 +81,35 @@ class Interface_levelup():
         pygame.draw.rect(self.screen, self.color_1, self.box_1, border_radius=25)
         pygame.draw.rect(self.screen, self.color_2, self.box_2, border_radius=25)
         pygame.draw.rect(self.screen, self.color_3, self.box_3, border_radius=25)
-        self.screen.blit(self.get_font(30).render(self.current_upgrades[0], True, "black"),(self.box_1.x+20,self.box_1.y+20))
-        self.screen.blit(self.get_font(30).render(self.current_upgrades[1], True, "black"),(self.box_2.x+20,self.box_2.y+20))#
-        self.screen.blit(self.get_font(30).render(self.current_upgrades[2], True, "black"),(self.box_3.x+20,self.box_3.y+20))
+        #self.screen.blit(self.get_font(30).render(self.current_upgrades[0], True, "black"),(self.box_1.x+20,self.box_1.y+20))
+        #self.screen.blit(self.get_font(30).render(self.current_upgrades[1], True, "black"),(self.box_2.x+20,self.box_2.y+20))#
+        #self.screen.blit(self.get_font(30).render(self.current_upgrades[2], True, "black"),(self.box_3.x+20,self.box_3.y+20))
         
         for i in range(3):
             box = getattr(self,"box_"+str(i+1))
-            print(box)
+            
             if self.current_upgrades[i] == "health":
                 self.screen.blit(self.health_image,(box.center[0]-self.size_upgrade/2,box.center[1]-self.size_upgrade/2))
+                self.screen.blit(self.get_font(30).render("Level: "+str(self.health_level), True, "black"),(box.x+20,box.y+20))
+                
             if self.current_upgrades[i] == "speed":
                 self.screen.blit(self.speed_image,(box.center[0]-self.size_upgrade/2,box.center[1]-self.size_upgrade/2))
+                self.screen.blit(self.get_font(30).render("Level: "+str(self.speed_level), True, "black"),(box.x+20,box.y+20))
+                
             if self.current_upgrades[i] == "cooldown":
                 self.screen.blit(self.cooldown_image,(box.center[0]-self.size_upgrade/2,box.center[1]-self.size_upgrade/2))
+                self.screen.blit(self.get_font(30).render("Level: "+str(self.cooldown_level), True, "black"),(box.x+20,box.y+20))
+                
             if self.current_upgrades[i] == "projectile_speed":
                 self.screen.blit(self.projectile_speed_image,(box.center[0]-self.size_upgrade/2,box.center[1]-self.size_upgrade/2))
+                self.screen.blit(self.get_font(30).render("Level: "+str(self.projectile_speed_level), True, "black"),(box.x+20,box.y+20))
+        
+        if self.hover_1:
+            self.show_tooltip(self.current_upgrades[0],pygame.mouse.get_pos())
+        if self.hover_2:
+            self.show_tooltip(self.current_upgrades[1],pygame.mouse.get_pos())
+        if self.hover_3:
+            self.show_tooltip(self.current_upgrades[2],pygame.mouse.get_pos())
         
     def update(self, dt):
         """ Updated die Level Up Oberfläche, indem es schaut welches Upgrade der Spieler wählt.
@@ -116,21 +141,45 @@ class Interface_levelup():
             if self.box_1.collidepoint(mouse_pos[0],mouse_pos[1]):
                 #pygame.draw.rect(self.screen, "grey", self.box_1, border_radius=25)
                 self.color_1 = "grey"
+                self.hover_1 = True
+                #self.show_tooltip(self.current_upgrades[0],mouse_pos)
             else:
                 self.color_1 = "white"
+                self.hover_1 = False
             #box 2
             if self.box_2.collidepoint(mouse_pos[0],mouse_pos[1]):
                 #pygame.draw.rect(self.screen, "grey", self.box_2, border_radius=25)
                 self.color_2 = "grey"
+                self.hover_2 = True
+                #self.show_tooltip(self.current_upgrades[1],mouse_pos)
             else:
                 self.color_2 = "white"
+                self.hover_2 = False
             #box 3
             if self.box_3.collidepoint(mouse_pos[0],mouse_pos[1]):
                 #pygame.draw.rect(self.screen, "grey", self.box_3, border_radius=25)
                 self.color_3 = "grey"
+                self.hover_3 = True
+                #self.show_tooltip(self.current_upgrades[2],mouse_pos)
             else:
                 self.color_3 = "white"
+                self.hover_3 = False
         
+        
+        
+    def show_tooltip(self,upgrade,mouse_pos):
+        if upgrade == "health":
+            self.draw_tooltip("Health","Increases your maximum health by 1",mouse_pos)
+        if upgrade == "speed":
+            self.draw_tooltip("Speed","Increases your movement speed by 20%",mouse_pos)
+        if upgrade == "cooldown":
+            self.draw_tooltip("Cooldown","Decreases your wand cooldown by 20%",mouse_pos)
+        if upgrade == "projectile_speed":
+            self.draw_tooltip("Projectile Speed","Increases your projectile speed by 20%",mouse_pos)
+        
+    def draw_tooltip(self,title,text,mouse_pos):
+        self.screen.blit(self.get_font(25).render(title, True, "black"),(mouse_pos[0]+20,mouse_pos[1]+20))
+        self.screen.blit(self.get_font(15).render(text, True, "black"),(mouse_pos[0]+20,mouse_pos[1]+50))
         
     def randomize_upgrades(self):
         """Wählt zufällig 3 Upgrades aus der Liste aus und speichert sie in self.current_upgrades.
@@ -143,18 +192,18 @@ class Interface_levelup():
         if self.current_upgrades[box] == "health":
             self.player.max_health_points += 1
             self.player.current_health_points += 1
-        
-        if self.current_upgrades[box] == "damage":
-            print("damage")
+            self.health_level += 1
         
         if self.current_upgrades[box] == "speed":
-            print("speed")
+            self.player.speed = self.player.speed * 1.2 
+            self.speed_level += 1
         
         if self.current_upgrades[box] == "cooldown":
-            print("cooldown")
+            self.player.wand.base_cooldown = self.player.wand.base_cooldown * 0.8
+            self.cooldown_level += 1
         
         if self.current_upgrades[box] == "projectile_speed":
-            print("projectile_speed")
+            self.player.wand.projectile_speed = self.player.wand.projectile_speed * 1.2
+            self.projectile_speed_level += 1
         
-        
-        
+        self.player.wand.current_cooldown = 0

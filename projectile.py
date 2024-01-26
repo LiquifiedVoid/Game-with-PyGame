@@ -5,7 +5,7 @@ import settings
 class Projectile(pygame.sprite.Sprite):
     """Initialisiert die Projectile Klasse.
     """
-    def __init__(self, player_pos, type, mouse_pos):
+    def __init__(self, player_pos, type, mouse_pos, speed):
         super().__init__()
         self.import_assets()
         self.image = pygame.Surface((10,50))
@@ -16,7 +16,7 @@ class Projectile(pygame.sprite.Sprite):
         self.image = self.animations[self.type][self.frame_index]
         self.rect = self.image.get_rect(center=(player_pos))
         self.vector = pygame.Vector2(self.rect.center) 
-        self.speed = 400
+        self.speed = speed
         
         self.hit_animate_help = 0
         

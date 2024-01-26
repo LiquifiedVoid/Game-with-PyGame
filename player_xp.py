@@ -5,8 +5,8 @@ class Player_xp():
         """Initialisiert die Klasse Player_xp.
         """
         self.level = 0
-        self.current_xp = 9
-        self.xp_for_next_level = 10
+        self.current_xp = 0
+        self.xp_for_next_level = 1
         self.length = 600
         self.height = 15
 
@@ -40,10 +40,10 @@ class Player_xp():
         """Levelt den Spieler hoch und setzt die XP auf 0.
         """
         self.current_xp = 0
-        self.xp_for_next_level += 10
+        self.xp_for_next_level += 5 * self.level//2
         self.level += 1
         self.level_up_hilfe = True
-        
+        print(self.xp_for_next_level)
     
     def update(self,screen):
         """Updated die Klasse Player_xp.
