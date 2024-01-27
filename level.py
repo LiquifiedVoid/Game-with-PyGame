@@ -7,7 +7,7 @@ from enviroment import Enviroment
 import sys
 import math
 from level_up_interface import Interface_levelup
-
+from gameover_interface import Gameover_Interface
 
 class Level:
     def __init__(self, e_h):
@@ -54,6 +54,7 @@ class Level:
         self.env = Enviroment(self.display_surface)
         self.player = Player((self.display_surface.get_width()/2,self.display_surface.get_height()/2), self.player_sprite, self.projectile_group)
         self.level_up_interface = Interface_levelup(self.display_surface,self.eh,self.player)
+        self.gameover_interface = Gameover_Interface(self.display_surface,self.eh,self.player)
         
     def run_game(self,dt):
         """Updated die Umgebung, den Spieler, die Gegner und die Projektile.
@@ -131,4 +132,14 @@ class Level:
         self.level_up_interface.draw(dt)
         self.level_up_interface.update(dt)
         
-        
+    def run_gameover_interface(self,dt):
+        self.env.update()
+        self.player_sprite.draw(self.display_surface)
+        self.enemy_sprites.draw(self.display_surface)
+        self.projectile_group.draw(self.display_surface)
+        self.player.xp.draw_xp_bar(self.display_surface)
+        self.player.draw_healthbar(self.display_surface)
+        self.player.wand.draw_cooldown(self.display_surface)
+        self.gameover_interface.draw(dt)
+        self.gameover_interface.update(dt)        
+

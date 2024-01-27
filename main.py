@@ -51,9 +51,24 @@ class Main:
 
                 dt = self.clock.tick(60) / 1000
                 self.level.run_game(dt)
-                
-                
-
+                if self.level.player.show_gameover:
+                    self.state = "gameover"
+                    self.level.player.show_gameover = False    
+            
+            if self.state == "gameover":
+                for event in self.eh.get_events():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+                dt = self.clock.tick(60) / 1000
+                self.level.run_gameover_interface(dt)
+                if self.level.gameover_interface.restart:
+                    self.state = "game"
+                    self.level.gameover_interface.restart = False
+                elif self.level.gameover_interface.quit:
+                    pygame.quit()
+                    sys.exit()
+                               
             if self.state == "level_up":
                 self.level.level_up_interface.upgrade_ausgewaehlt = False
                 for event in self.eh.get_events():

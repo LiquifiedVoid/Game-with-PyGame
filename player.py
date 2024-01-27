@@ -25,6 +25,7 @@ class Player(pygame.sprite.Sprite):
         #general
         self.image = self.animations[self.status][self.frame_index]
         self.rect = self.image.get_rect(center= pos)
+        self.show_gameover = False
         
         #movement
         self.direction = pygame.math.Vector2()
@@ -57,7 +58,7 @@ class Player(pygame.sprite.Sprite):
             self.frame_index += 4 * dt
             if self.frame_index >= len(self.animations[self.status]) and self.status == "gameover":
                 self.animate_bool = False
-                
+                self.gameover()
             else:
                 if self.frame_index >= len(self.animations[self.status]):
                     self.frame_index = 0
@@ -119,9 +120,8 @@ class Player(pygame.sprite.Sprite):
         self.pos.y += self.direction.y * self.speed *dt
         self.rect.centery = self.pos.y
 
-    def check_gameover(self): #!!!!TODO: gameover screen
-        if self.status == "gameover":
-            pass
+    def gameover(self): #!!!!TODO: gameover screen
+        self.show_gameover = True
 
     def draw_healthbar(self,screen):
         """Zeichnet die Healthbar des Spielers auf den Screen.
