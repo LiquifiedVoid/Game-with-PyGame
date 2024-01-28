@@ -4,24 +4,22 @@ from settings import *
 from level import Level
 import event_handler as e_h
 
+
 class Main:
     def __init__(self):
         pygame.init()
-        #events für alle Klassen verfügbar machen
+        # events für alle Klassen verfügbar machen
         self.eh = e_h.EventHandler()
-        #Display
+        # Display
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("Game!")
-        #Clock
+        # Clock
         self.clock = pygame.time.Clock()
-        #Level und Game
+        # Level und Game
         self.level = Level(self.eh)
         self.running = True
         self.state = "startscreen"
-        
-          
-        
-        
+
     def run(self):
         """Main loop des Spiels. Updated den Start/Pause-Screen oder das Spiel und wechselt zwischen ihnen. 
         """
@@ -35,7 +33,6 @@ class Main:
                 run_game = self.level.run_startscreen(dt)
                 if run_game:
                     self.state = "game"
-                
 
             if self.state == "game":
                 for event in self.eh.get_events():
@@ -53,22 +50,19 @@ class Main:
                 self.level.run_game(dt)
                 if self.level.player.show_gameover:
                     self.state = "gameover"
-                    self.level.player.show_gameover = False    
-            
+                    self.level.player.show_gameover = False
+
             if self.state == "gameover":
                 for event in self.eh.get_events():
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         sys.exit()
                 dt = self.clock.tick(60) / 1000
-                self.level.run_gameover_interface(dt)
-                if self.level.gameover_interface.restart:
+                restart_game = self.level.run_gameover_interface(dt)
+                if restart_game:
+                    self.level = Level(self.eh)
                     self.state = "game"
-                    self.level.gameover_interface.restart = False
-                elif self.level.gameover_interface.quit:
-                    pygame.quit()
-                    sys.exit()
-                               
+
             if self.state == "level_up":
                 self.level.level_up_interface.upgrade_ausgewaehlt = False
                 for event in self.eh.get_events():
@@ -79,7 +73,7 @@ class Main:
                 self.level.run_level_up_interface(dt)
                 if self.level.level_up_interface.upgrade_ausgewaehlt:
                     self.state = "game"
-                
+
             pygame.display.update()
 
 
