@@ -72,8 +72,3 @@ class Gameover_Interface():
             if restart_rect.collidepoint(mouse_pos[0], mouse_pos[1]) and event.type == pygame.MOUSEBUTTONUP:
                 print("restart")
                 return True
-
-    def update(self, dt):
-        """Updated das Interface.
-        """
-        pass

@@ -127,6 +127,8 @@ class Level:
                 return True
 
     def run_level_up_interface(self, dt):
+        """ Zeigt das Level Up Interface an und updated es. Der Rest des Spiels wird pausiert."""
+
         self.env.update()
         self.player_sprite.draw(self.display_surface)
         self.enemy_sprites.draw(self.display_surface)
@@ -138,6 +140,7 @@ class Level:
         self.level_up_interface.update(dt)
 
     def run_gameover_interface(self, dt):
+        """ Zeigt das Gameover Interface an und updated es. Der Rest des Spiels wird pausiert. Gibt zurück ob das Spiel neugestartet werden soll."""
         self.env.update()
         self.player_sprite.draw(self.display_surface)
         self.enemy_sprites.draw(self.display_surface)
@@ -146,6 +149,5 @@ class Level:
         self.player.draw_healthbar(self.display_surface)
         self.player.wand.draw_cooldown(self.display_surface)
         restart = self.gameover_interface.draw(dt)
-        self.gameover_interface.update(dt)
         if restart:
             return True

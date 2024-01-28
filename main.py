@@ -7,6 +7,7 @@ import event_handler as e_h
 
 class Main:
     def __init__(self):
+        """ Initialisiert das Spiel und die Level Klasse."""
         pygame.init()
         # events für alle Klassen verfügbar machen
         self.eh = e_h.EventHandler()
@@ -16,12 +17,12 @@ class Main:
         # Clock
         self.clock = pygame.time.Clock()
         # Level und Game
-        self.level = Level(self.eh)
+        self.level = Level(self.eh)  # Steurung des Spiels
         self.running = True
         self.state = "startscreen"
 
     def run(self):
-        """Main loop des Spiels. Updated den Start/Pause-Screen oder das Spiel und wechselt zwischen ihnen. 
+        """Main loop des Spiels. Updated den Start/Pause/Gameover-Screen oder das Spiel und wechselt zwischen ihnen. 
         """
         while self.running:
             if self.state == "startscreen":

@@ -48,6 +48,6 @@ class Player_xp():
         print(self.xp_for_next_level)
 
     def update(self, screen):
-        """Updated die Klasse Player_xp.
+        """Updated die XP-Bar.
         """
         self.draw_xp_bar(screen)
