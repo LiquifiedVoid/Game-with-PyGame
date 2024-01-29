@@ -7,8 +7,8 @@ from enviroment import Enviroment
 import sys
 import math
 from level_up_interface import Interface_levelup
-from gameover_interface import Gameover_Interface
-
+from gameover_interface import Interface_Gameover
+from startscreen_interface import Interface_Startscreen
 
 class Level:
     def __init__(self, e_h):
@@ -56,8 +56,9 @@ class Level:
         self.env = Enviroment(self.display_surface)
         self.player = Player((self.display_surface.get_width(
         )/2, self.display_surface.get_height()/2), self.player_sprite, self.projectile_group)
+        self.startscreen_interface = Interface_Startscreen(self.display_surface, self.eh, self.player)
         self.level_up_interface = Interface_levelup(self.display_surface, self.eh, self.player)
-        self.gameover_interface = Gameover_Interface(self.display_surface, self.eh, self.player)
+        self.gameover_interface = Interface_Gameover(self.display_surface, self.eh, self.player)
         
     def draw_crosshair(self):
         """Zeichnet das Fadenkreuz.
@@ -85,9 +86,7 @@ class Level:
         
     def run_startscreen(self, dt):
         """Zeigt den Startscreen an und gibt zurück ob das Spiel gestartet werden soll."""
-        center_x = self.display_surface.get_width()/2
-        center_y = self.display_surface.get_height()/2
-        mouse_pos = pygame.mouse.get_pos()
+        
 
         self.env.update()
         self.player_sprite.draw(self.display_surface)
@@ -96,47 +95,11 @@ class Level:
         self.player.xp.draw_xp_bar(self.display_surface)
         self.player.draw_healthbar(self.display_surface)
         self.player.wand.draw_cooldown(self.display_surface)
-        # play button
-        play_txt = self.get_font(70).render("Play", True, "black")
-        play_rect = play_txt.get_rect()
-        play_rect.center = (center_x, center_y-50)
-        self.display_surface.blit(play_txt, play_rect)
-        gray_box = pygame.image.load("images/level/rect.png")
-        gray_box = pygame.transform.scale(gray_box, (play_rect.w, play_rect.h))
-        gray_box.set_alpha(0)
-        self.display_surface.blit(gray_box, play_rect.topleft)
-
-        # quit button
-        quit_txt = self.get_font(50).render("Quit", True, "black")
-        quit_rect = quit_txt.get_rect()
-        quit_rect.center = (center_x, center_y+50)
-        self.display_surface.blit(quit_txt, quit_rect)
-        gray_box2 = pygame.image.load("images/level/rect.png")
-        gray_box2 = pygame.transform.scale(gray_box2, (quit_rect.w, quit_rect.h))
-        gray_box2.set_alpha(0)
-        self.display_surface.blit(gray_box2, quit_rect.topleft)
-
-        # game name
-        game_name = self.get_font(110).render("Game", True, "black")
-        game_name_rect = game_name.get_rect()
-        t = pygame.time.get_ticks()/3
-        sin = math.sin(t/90) * 20
-        game_name_rect.center = (center_x, center_y-250 + sin)
-        self.display_surface.blit(game_name, game_name_rect)
-        
-        
-        # check clicked
-        for event in self.eh.get_events():
-            # quit
-            if quit_rect.collidepoint(mouse_pos[0], mouse_pos[1]) and event.type == pygame.MOUSEBUTTONUP:
-                pygame.quit()
-                sys.exit()
-            # run game
-            if play_rect.collidepoint(mouse_pos[0], mouse_pos[1]) and event.type == pygame.MOUSEBUTTONUP:
-                return True
-
-            
+        play = self.startscreen_interface.draw(dt)
+        if play:
+            return True
         pygame.mouse.set_visible(True)
+        
 
     def run_level_up_interface(self, dt):
         """ Zeigt das Level Up Interface an und updated es. Der Rest des Spiels wird pausiert."""
