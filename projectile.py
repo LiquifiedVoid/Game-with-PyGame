@@ -20,6 +20,11 @@ class Projectile(pygame.sprite.Sprite):
         
         self.hit_animate_help = 0
         
+        self.hit_sound = pygame.mixer.Sound("music/hit.mp3")
+        self.hit_sound.set_volume(0.1)
+        self.play_sound = False
+        self.played = False
+        
     def import_assets(self):
         """Importiert die Bilder für die Projektile.
         """
@@ -66,6 +71,7 @@ class Projectile(pygame.sprite.Sprite):
                 self.frame_index = 0
             self.image = self.animations[self.type][int(self.frame_index)]
         elif "hit" in self.type:
+            self.play_sound = True
             if self.frame_index >= len(self.animations[self.type]):
                 self.frame_index = 0
                 self.hit_animate_help +=1
@@ -80,5 +86,9 @@ class Projectile(pygame.sprite.Sprite):
         self.move(dt)
         self.check_hit(enemy,enemy_sprites)
         self.animate(dt)
-        
+        if self.play_sound:
+            if self.played == False:
+                self.hit_sound.play()
+                self.play_sound = False
+                self.played = True
         

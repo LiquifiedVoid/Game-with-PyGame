@@ -139,11 +139,24 @@ class Player(pygame.sprite.Sprite):
     def get_pos(self):
         return self.pos
 
+    def check_out_of_bounds(self):
+        """Überprüft, ob der Spieler aus dem Bildschirm läuft und korrigiert seine Position.
+        """
+        if self.pos.x < 0 + self.rect.w/2:
+            self.pos.x = 0 + self.rect.w/2
+        if self.pos.x > SCREEN_WIDTH - self.rect.w/2:
+            self.pos.x = SCREEN_WIDTH - self.rect.w/2
+        if self.pos.y < 0 + self.rect.h/2:
+            self.pos.y = 0 + self.rect.h/2
+        if self.pos.y > SCREEN_HEIGHT - self.rect.h/2:
+            self.pos.y = SCREEN_HEIGHT - self.rect.h/2
+
     def update(self, dt, screen):
         """Updated die Player Klasse und seinen Zauberstab.
         """
         self.input()
         self.check_idle()
+        self.check_out_of_bounds()
 
         self.draw_healthbar(screen)
         self.xp.update(screen)

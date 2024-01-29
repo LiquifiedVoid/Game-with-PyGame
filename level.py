@@ -56,11 +56,18 @@ class Level:
         self.env = Enviroment(self.display_surface)
         self.player = Player((self.display_surface.get_width(
         )/2, self.display_surface.get_height()/2), self.player_sprite, self.projectile_group)
-        self.level_up_interface = Interface_levelup(
-            self.display_surface, self.eh, self.player)
-        self.gameover_interface = Gameover_Interface(
-            self.display_surface, self.eh, self.player)
-
+        self.level_up_interface = Interface_levelup(self.display_surface, self.eh, self.player)
+        self.gameover_interface = Gameover_Interface(self.display_surface, self.eh, self.player)
+        
+    def draw_crosshair(self):
+        """Zeichnet das Fadenkreuz.
+        """
+        mouse_pos = pygame.mouse.get_pos()
+        crosshair = pygame.image.load("images/player/crosshair.png")
+        crosshair = pygame.transform.scale(crosshair, (32, 32))
+        crosshair_rect = crosshair.get_rect(center=(mouse_pos[0], mouse_pos[1]))
+        self.display_surface.blit(crosshair, crosshair_rect)
+        
     def run_game(self, dt):
         """Updated die Umgebung, den Spieler, die Gegner und die Projektile.
         """
@@ -71,9 +78,11 @@ class Level:
         self.enemy_sprites.draw(self.display_surface)
         self.enemy_sprites.update(dt)
         self.projectile_group.draw(self.display_surface)
-        self.projectile_group.update(
-            dt, self.enemy, self.enemy_sprites, self.display_surface)
-
+        self.projectile_group.update(dt, self.enemy, self.enemy_sprites, self.display_surface)
+        pygame.event.set_grab(True)
+        pygame.mouse.set_visible(False)
+        self.draw_crosshair()
+        
     def run_startscreen(self, dt):
         """Zeigt den Startscreen an und gibt zurück ob das Spiel gestartet werden soll."""
         center_x = self.display_surface.get_width()/2
@@ -103,8 +112,7 @@ class Level:
         quit_rect.center = (center_x, center_y+50)
         self.display_surface.blit(quit_txt, quit_rect)
         gray_box2 = pygame.image.load("images/level/rect.png")
-        gray_box2 = pygame.transform.scale(
-            gray_box2, (quit_rect.w, quit_rect.h))
+        gray_box2 = pygame.transform.scale(gray_box2, (quit_rect.w, quit_rect.h))
         gray_box2.set_alpha(0)
         self.display_surface.blit(gray_box2, quit_rect.topleft)
 
@@ -115,7 +123,8 @@ class Level:
         sin = math.sin(t/90) * 20
         game_name_rect.center = (center_x, center_y-250 + sin)
         self.display_surface.blit(game_name, game_name_rect)
-
+        
+        
         # check clicked
         for event in self.eh.get_events():
             # quit
@@ -125,6 +134,9 @@ class Level:
             # run game
             if play_rect.collidepoint(mouse_pos[0], mouse_pos[1]) and event.type == pygame.MOUSEBUTTONUP:
                 return True
+
+            
+        pygame.mouse.set_visible(True)
 
     def run_level_up_interface(self, dt):
         """ Zeigt das Level Up Interface an und updated es. Der Rest des Spiels wird pausiert."""
@@ -138,7 +150,8 @@ class Level:
         self.player.wand.draw_cooldown(self.display_surface)
         self.level_up_interface.draw(dt)
         self.level_up_interface.update(dt)
-
+        pygame.mouse.set_visible(True)
+        
     def run_gameover_interface(self, dt):
         """ Zeigt das Gameover Interface an und updated es. Der Rest des Spiels wird pausiert. Gibt zurück ob das Spiel neugestartet werden soll."""
         self.env.update()
@@ -151,3 +164,4 @@ class Level:
         restart = self.gameover_interface.draw(dt)
         if restart:
             return True
+        pygame.mouse.set_visible(True)

@@ -12,6 +12,8 @@ class Wand(): #Wand = Zauberstab
         self.type = 'fire'
         self.group = group
         self.projectile_speed = 400
+        self.shoot_sound = pygame.mixer.Sound("music/shoot.mp3")
+        self.shoot_sound.set_volume(0.1)
         
     def draw_cooldown(self,screen):
         """Zeichnet den Cooldown des Wands auf den Screen.
@@ -29,5 +31,6 @@ class Wand(): #Wand = Zauberstab
             self.mouse_pos = mouse_pos
             self.current_cooldown = self.base_cooldown
             self.group.add(Projectile(self.player_pos, self.type, self.mouse_pos, self.projectile_speed))
+            self.shoot_sound.play()
 
         
