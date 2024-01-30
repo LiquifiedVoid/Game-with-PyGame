@@ -20,9 +20,12 @@ class Main:
         self.level = Level(self.eh)  # Steurung des Spiels
         self.running = True
         self.state = "startscreen"
+        self.volume_music = 0.05
         pygame.mixer.music.load("music/menu.mp3")
-        pygame.mixer.music.set_volume(0.05)
+        pygame.mixer.music.set_volume(self.volume_music)
         pygame.mixer.music.play(-1)
+        
+
 
     def run(self):
         """Main loop des Spiels. Updated den Start/Pause/Gameover-Screen oder das Spiel und wechselt zwischen ihnen. 
@@ -37,9 +40,14 @@ class Main:
                 run_game = self.level.run_startscreen(dt)
                 if run_game:
                     self.state = "game"
-                    pygame.mixer.music.load("music/phase1.mp3")
-                    pygame.mixer.music.set_volume(0.05)
-                    pygame.mixer.music.play(-1)
+                    if self.level.startscreen_interface.music_state == self.level.startscreen_interface.music_on:
+                        pygame.mixer.music.load("music/phase1.mp3")
+                        pygame.mixer.music.set_volume(0.05)
+                        pygame.mixer.music.play(-1)
+                    else:
+                        pygame.mixer.music.load("music/phase1.mp3")
+                        pygame.mixer.music.set_volume(0)
+                        pygame.mixer.music.play(-1)
 
             if self.state == "game":
                 for event in self.eh.get_events():
@@ -48,9 +56,14 @@ class Main:
                         sys.exit()
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                         self.state = "startscreen"
-                        pygame.mixer.music.load("music/menu.mp3")
-                        pygame.mixer.music.set_volume(0.05)
-                        pygame.mixer.music.play(-1)
+                        if self.level.startscreen_interface.music_state == self.level.startscreen_interface.music_on:
+                            pygame.mixer.music.load("music/menu.mp3")
+                            pygame.mixer.music.set_volume(0.05)
+                            pygame.mixer.music.play(-1)
+                        else:
+                            pygame.mixer.music.load("music/menu.mp3")
+                            pygame.mixer.music.set_volume(0)
+                            pygame.mixer.music.play(-1)
 
                 if self.level.player.xp.level_up_hilfe:
                     self.state = "level_up"

@@ -42,13 +42,14 @@ class Level:
     def spawn_enemys(self, dt):
         """Spawnt Gegner und updated den Timer.
         """
-        self.spawn_positions = [(random.randint(
-            0, self.display_surface.get_width()), random.choice(self.y_for_top_bottom))]
+        self.spawn_positions = [(random.randint(0, self.display_surface.get_width()), random.choice(self.y_for_top_bottom))]
         self.timer -= dt
         if self.timer <= 0:
-            self.enemy = Enemy(random.choice(self.spawn_positions),
-                               self.enemy_sprites, self.player, self.display_surface)
-            self.timer = 1.5
+            self.enemy = Enemy(random.choice(self.spawn_positions),self.enemy_sprites, self.player, self.display_surface)
+            if self.player.xp.level >= 8:
+                self.timer = 0.5
+            else:
+                self.timer = 2 - self.player.xp.level/5
 
     def setup(self):
         """Initialisiert die Umgebung und den Spieler.
