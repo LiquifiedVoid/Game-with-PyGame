@@ -80,7 +80,7 @@ class Interface_levelup():
         font = pygame.font.Font("fonts/joystix monospace.otf", size)
         return font
 
-    def draw(self, dt):
+    def draw(self):
         """Zeichnet die Level Up Oberfläche auf den Screen.
         """
         if not self.randomized:
@@ -132,7 +132,7 @@ class Interface_levelup():
         if self.hover_3:
             self.show_tooltip(self.current_upgrades[2], pygame.mouse.get_pos())
 
-    def update(self, dt):
+    def update(self):
         """ Updated die Level Up Oberfläche, indem es schaut welches Upgrade der Spieler wählt.
         """
         mouse_pos = pygame.mouse.get_pos()

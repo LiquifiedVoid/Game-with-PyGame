@@ -4,10 +4,10 @@ import math
 
 
 class Interface_Gameover():
-    def __init__(self, screen, e_h, player):
+    def __init__(self, screen, e_h):
         self.display_surface = screen
         self.eh = e_h
-        self.player = player
+        
 
     def get_font(self, size):
         """Gibt eine Schriftart zurück mit gegebener 
@@ -15,7 +15,7 @@ class Interface_Gameover():
         font = pygame.font.Font("fonts/joystix monospace.otf", size)
         return font
 
-    def draw(self, dt):
+    def draw(self):
         """Zeichnet das Interface.
         """
         center_x = self.display_surface.get_width()/2

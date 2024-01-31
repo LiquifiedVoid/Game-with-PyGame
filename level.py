@@ -4,8 +4,6 @@ from player import Player
 from enemy import Enemy
 import random
 from enviroment import Enviroment
-import sys
-import math
 from level_up_interface import Interface_levelup
 from gameover_interface import Interface_Gameover
 from startscreen_interface import Interface_Startscreen
@@ -59,7 +57,7 @@ class Level:
         )/2, self.display_surface.get_height()/2), self.player_sprite, self.projectile_group)
         self.startscreen_interface = Interface_Startscreen(self.display_surface, self.eh, self.player)
         self.level_up_interface = Interface_levelup(self.display_surface, self.eh, self.player)
-        self.gameover_interface = Interface_Gameover(self.display_surface, self.eh, self.player)
+        self.gameover_interface = Interface_Gameover(self.display_surface, self.eh)
         
     def draw_crosshair(self):
         """Zeichnet das Fadenkreuz.
@@ -96,7 +94,7 @@ class Level:
         self.player.xp.draw_xp_bar(self.display_surface)
         self.player.draw_healthbar(self.display_surface)
         self.player.wand.draw_cooldown(self.display_surface)
-        play = self.startscreen_interface.draw(dt)
+        play = self.startscreen_interface.draw()
         if play:
             return True
         pygame.mouse.set_visible(True)
@@ -112,8 +110,8 @@ class Level:
         self.player.xp.draw_xp_bar(self.display_surface)
         self.player.draw_healthbar(self.display_surface)
         self.player.wand.draw_cooldown(self.display_surface)
-        self.level_up_interface.draw(dt)
-        self.level_up_interface.update(dt)
+        self.level_up_interface.draw()
+        self.level_up_interface.update()
         pygame.mouse.set_visible(True)
         
     def run_gameover_interface(self, dt):
@@ -125,7 +123,7 @@ class Level:
         self.player.xp.draw_xp_bar(self.display_surface)
         self.player.draw_healthbar(self.display_surface)
         self.player.wand.draw_cooldown(self.display_surface)
-        restart = self.gameover_interface.draw(dt)
+        restart = self.gameover_interface.draw()
         if restart:
             return True
         pygame.mouse.set_visible(True)

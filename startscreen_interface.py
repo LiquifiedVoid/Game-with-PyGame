@@ -31,7 +31,7 @@ class Interface_Startscreen():
         font = pygame.font.Font("fonts/joystix monospace.otf", size)
         return font
 
-    def draw(self, dt):
+    def draw(self):
         """Zeichnet das Interface.
         """
         center_x = self.display_surface.get_width()/2

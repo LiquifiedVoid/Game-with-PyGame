@@ -32,11 +32,6 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2()
         self.pos = pygame.math.Vector2(self.rect.center)
 
-        # font setup for +1 health
-        self.font = pygame.font.Font("fonts/joystix monospace.otf", 20)
-        self.text_dropped_health = self.font.render("+1 HP", True, "red")
-        self.dropped_health_rect = self.text_dropped_health.get_rect()
-
         # wand
         self.wand = Wand(self.pos, projectile_group)
 
@@ -121,7 +116,7 @@ class Player(pygame.sprite.Sprite):
         self.pos.y += self.direction.y * self.speed * dt
         self.rect.centery = self.pos.y
 
-    def gameover(self):  # !!!!TODO: gameover screen
+    def gameover(self):  
         self.show_gameover = True
 
     def draw_healthbar(self, screen):
