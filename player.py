@@ -62,7 +62,8 @@ class Player(pygame.sprite.Sprite):
                     self.frame_index)]
 
     def input(self):
-        """Überprüft die Tastatureingaben und bewegt den Spieler. Es wird auch überprüft, ob der Spieler den Zauberstab benutzt.
+        """Überprüft die Tastatureingaben und bewegt den Spieler. Es wird auch überprüft, ob der Spieler den Zauberstab benutzt. 
+        Bei WASD krieg der Spieler eine Richtung und bei der Maus wird der Zauberstab benutzt.
         """
         keys = pygame.key.get_pressed()
 
@@ -102,7 +103,7 @@ class Player(pygame.sprite.Sprite):
             self.status = self.status.split("_")[0] + "_idle"
 
     def move(self, dt):
-        """Bewegt den Spieler in die Richtung, in die er sich bewegen soll.
+        """Bewegt den Spieler in die Richtung, in die er sich bewegen soll laut self.direction.
         """
         # gleiche bewegung auch für diagonal
         if self.direction.magnitude() > 0:
@@ -117,6 +118,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.centery = self.pos.y
 
     def gameover(self):  
+        """ Löst den Gameover aus."""
         self.show_gameover = True
 
     def draw_healthbar(self, screen):
@@ -132,6 +134,7 @@ class Player(pygame.sprite.Sprite):
                          self.current_health_percentage, 10), border_radius=10)
 
     def get_pos(self):
+        """ Gibt die Position des Spielers zurück."""
         return self.pos
 
     def check_out_of_bounds(self):

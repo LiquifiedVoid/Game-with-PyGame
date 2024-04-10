@@ -28,7 +28,7 @@ class Main:
 
 
     def run(self):
-        """Main loop des Spiels. Updated den Start/Pause/Gameover-Screen oder das Spiel und wechselt zwischen ihnen. 
+        """Main loop des Spiels. Updated den Start/Pause/Gameover/Levelup-Screen oder das Spiel und wechselt zwischen ihnen. 
         """
         while self.running:
             if self.state == "startscreen":

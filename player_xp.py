@@ -39,7 +39,7 @@ class Player_xp():
                 self.level_up()
 
     def level_up(self):
-        """Levelt den Spieler hoch und setzt die XP auf 0.
+        """Levelt den Spieler hoch und setzt die XP zurück auf 0.
         """
         self.current_xp = 0
         self.xp_for_next_level += 5 * self.level//2

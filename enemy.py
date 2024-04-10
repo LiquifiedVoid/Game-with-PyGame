@@ -43,7 +43,7 @@ class Enemy(pygame.sprite.Sprite):
             self.animations[animation] = import_folder(full_path,(32,32))
         
     def animate(self,dt):
-        """Animiert die Klasse. 
+        """Animiert die Klasse und löst die gameover Animation aus, wenn die Klasse stirbt und lässt sie dann verschwinden und Leben fallen.
         """
         if self.status != "gameover":
             self.frame_index += 4 * dt
@@ -96,7 +96,7 @@ class Enemy(pygame.sprite.Sprite):
             self.kill()
 
     def drop_health(self):
-        """Lässt die Klasse ein Leben fallen, wenn der Spieler nicht volle Leben hat.
+        """Lässt die Klasse mit einer gewissen Wahrscheinlichkeit ein Leben fallen, wenn der Spieler nicht volle Leben hat.
         """
         if random.randint(0,600) == 1: #ca. 5% chance
                 if self.player.max_health_points != self.player.current_health_points and not self.drop_hp_help:

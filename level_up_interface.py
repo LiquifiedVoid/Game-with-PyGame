@@ -75,7 +75,7 @@ class Interface_levelup():
         self.projectile_speed_level = 0
 
     def get_font(self, size):
-        """Gibt eine Schriftart zurück mit gegebener 
+        """Gibt eine Schriftart zurück mit gegebener Schriftgröße.
         """
         font = pygame.font.Font("fonts/joystix monospace.otf", size)
         return font
@@ -133,7 +133,7 @@ class Interface_levelup():
             self.show_tooltip(self.current_upgrades[2], pygame.mouse.get_pos())
 
     def update(self):
-        """ Updated die Level Up Oberfläche, indem es schaut welches Upgrade der Spieler wählt.
+        """ Updated die Level Up Oberfläche, indem es schaut welches Upgrade der Spieler wählt und über welche Box er mit der Maus fährt.
         """
         mouse_pos = pygame.mouse.get_pos()
 
@@ -203,7 +203,7 @@ class Interface_levelup():
                 "Projectile Speed", "Increases your projectile speed by 20%", mouse_pos)
 
     def draw_tooltip(self, title, text, mouse_pos):
-        """Zeichnet einen Tooltip mit dem gegebenen Titel und Text an der gegebenen Position."""
+        """Zeichnet einen Tooltip mit dem gegebenen Titel und Text an der Position."""
         self.screen.blit(self.get_font(25).render(
             title, True, "black"), (mouse_pos[0]+20, mouse_pos[1]+20))
         self.screen.blit(self.get_font(15).render(

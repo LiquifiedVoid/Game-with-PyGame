@@ -5,6 +5,7 @@ import math
 
 class Interface_Startscreen():
     def __init__(self, screen, e_h, player):
+        """ Initialisiert das Interface für den Startscreen."""
         self.display_surface = screen
         self.eh = e_h
         self.player = player
@@ -26,13 +27,15 @@ class Interface_Startscreen():
         self.show_info = False
 
     def get_font(self, size):
-        """Gibt eine Schriftart zurück mit gegebener 
+        """Gibt eine Schriftart zurück mit gegebener Schriftgröße.
         """
         font = pygame.font.Font("fonts/joystix monospace.otf", size)
         return font
 
     def draw(self):
-        """Zeichnet das Interface.
+        """Zeichnet das Interface auf den Bildschirm und gibt True zurück, wenn der Play-Button gedrückt wurde. Wenn der Quit-Button gedrückt wurde, wird das Spiel beendet.
+        Die Soundbuttons werden auch gezeichnet und wenn sie gedrückt werden, wird der Sound an- bzw. ausgeschaltet.
+        Der Info-Button wird auch gezeichnet und wenn er gehovert wird, wird eine Info angezeigt.
         """
         center_x = self.display_surface.get_width()/2
         center_y = self.display_surface.get_height()/2

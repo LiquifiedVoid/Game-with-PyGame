@@ -3,9 +3,9 @@ from hilfe import *
 import settings
 
 class Projectile(pygame.sprite.Sprite):
-    """Initialisiert die Projectile Klasse.
-    """
     def __init__(self, player_pos, type, mouse_pos, speed):
+        """Initialisiert die Projectile Klasse.
+        """
         super().__init__()
         self.import_assets()
         self.image = pygame.Surface((10,50))
@@ -37,7 +37,7 @@ class Projectile(pygame.sprite.Sprite):
             self.animations[animation] = import_folder(full_path,(32,32))    
     
     def move(self, dt):
-        """Bewegt das Projektil in Richtung des Mauszeigers und löscht es, wenn es den Bildschirm verlässt oder ein Gegner getroffen wurde.
+        """Bewegt das Projektil in Richtung des Mauszeigers zum Zeitpunkt des schießens und löscht es, wenn es den Bildschirm verlässt.
         """
         if "hit" not in self.type:
             self.mouse_vector = pygame.Vector2(self.mouse_pos)

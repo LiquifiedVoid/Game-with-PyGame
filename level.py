@@ -32,7 +32,7 @@ class Level:
         pygame.font.init()
 
     def get_font(self, size):
-        """Gibt eine Schriftart zurück mit gegebener 
+        """Gibt eine Schriftart zurück mit gegebener Schriftgröße.
         """
         font = pygame.font.Font("fonts/joystix monospace.otf", size)
         return font
@@ -50,7 +50,7 @@ class Level:
                 self.timer = 2 - self.player.xp.level/5
 
     def setup(self):
-        """Initialisiert die Umgebung und den Spieler.
+        """Initialisiert die Umgebung, den Spieler und die Interfaces.
         """
         self.env = Enviroment(self.display_surface)
         self.player = Player((self.display_surface.get_width(
@@ -84,9 +84,8 @@ class Level:
         self.draw_crosshair()
         
     def run_startscreen(self, dt):
-        """Zeigt den Startscreen an und gibt zurück ob das Spiel gestartet werden soll."""
-        
-
+        """Zeigt den Startscreen an und gibt zurück ob das Spiel gestartet werden soll.
+        """
         self.env.update()
         self.player_sprite.draw(self.display_surface)
         self.enemy_sprites.draw(self.display_surface)

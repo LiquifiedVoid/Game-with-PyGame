@@ -5,18 +5,19 @@ import math
 
 class Interface_Gameover():
     def __init__(self, screen, e_h):
+        """ Initialisiert das Interface für den Gameover-Screen."""
         self.display_surface = screen
         self.eh = e_h
         
 
     def get_font(self, size):
-        """Gibt eine Schriftart zurück mit gegebener 
+        """Gibt eine Schriftart zurück mit gegebener Schriftgröße.
         """
         font = pygame.font.Font("fonts/joystix monospace.otf", size)
         return font
 
     def draw(self):
-        """Zeichnet das Interface.
+        """Zeichnet das Interface auf den Bildschirm und gibt True zurück, wenn der Restart-Button gedrückt wurde. Wenn der Quit-Button gedrückt wurde, wird das Spiel beendet.
         """
         center_x = self.display_surface.get_width()/2
         center_y = self.display_surface.get_height()/2

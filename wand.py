@@ -16,7 +16,7 @@ class Wand(): #Wand = Zauberstab
         self.shoot_sound.set_volume(0.1)
         
     def draw_cooldown(self,screen):
-        """Zeichnet den Cooldown des Wands auf den Screen.
+        """Zeichnet den Cooldown des Wands auf den Screen unter dem Spieler.
         """
         self.cooldown_percentage = self.current_cooldown / self.base_cooldown
         pygame.draw.rect(screen,"royalblue4",(self.player_pos.x,self.player_pos.y+40, 30 * self.cooldown_percentage,8),
